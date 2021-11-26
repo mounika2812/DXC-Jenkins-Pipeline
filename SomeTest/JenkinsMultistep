@@ -1,0 +1,20 @@
+pipeline{
+    
+    agent any
+    
+    stages{
+         stage('Build'){
+             steps{
+                 
+                bat 'echo %date% -- %time%'
+                bat """
+                 echo "We can do more stuff here as it is a multi steps job"
+                 dir
+                """ 
+             }
+             
+             
+         }
+    }
+    
+}
