@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     tools{
-        maven "jenkins-mvn"
+        maven "Jenkins_mvn"
     }
     environment{
         tomcatWebLocation="\"C:\\Users\\mrapuru\\Downloads\\apache-tomcat-9.0.55\\apache-tomcat-9.0.55\\webapps\""
