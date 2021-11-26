@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     tools{
-        maven "Jenkins-mvn"
+        maven "Jenkins_mvn"
     }
 
     stages{
