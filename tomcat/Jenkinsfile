@@ -1,57 +1,43 @@
 pipeline{
+    agent any
 
-    agent any     
     tools{
+        maven "jenkins-mvn"
+    }
+    environment{
+        tomcatWebLocation="\"C:\\Users\\mrapuru\\Downloads\\apache-tomcat-9.0.55\\apache-tomcat-9.0.55\\webapps\""
+        tomcatBinLocation="\"C:\\Users\\mrapuru\\Downloads\\apache-tomcat-9.0.55\\apache-tomcat-9.0.55\\bin\""
+        buildLocation="C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dxc-deploy-to-tomcat-pipeline\\mywebapp\\target\\mywebapp.war"
+    }
 
-        maven "jenkins-mvn"
+    stages{
 
-    }
-
-    environment{
-
-        tomcatWebLocation="\"D:\\Zartab\\Trainings\\DXC Jenkins Training Nov 2021\\apache-tomcat-9.0.55\\apache-tomcat-9.0.55\\webapps\""
-
-        tomcatBinLocation="\"D:\\Zartab\\Trainings\\DXC Jenkins Training Nov 2021\\apache-tomcat-9.0.55\\apache-tomcat-9.0.55\\bin\""
-
-        buildLocation="C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dxc-deploy-to-tomcat-pipeline\\mywebapp\\target\\mywebapp.war"
-
-    }     
-    stages{         
         stage('Git Checkout'){
+            steps{
 
-            steps{             
-                git 'https://github.com/codewithz/dxc-web-app.git'
-
-            }
-
-        }         stage('Maven Build'){
-
-                      steps{
-
-                          bat """
-
-                          cd mywebapp
-
-                          mvn clean package
-
-                          """
-
-            }
-
-        }    
-    }     
-    post{
-
-        success{             
-            bat """
-
-                copy %buildLocation%  %tomcatWebLocation%
-
-                %tomcatBinLocation%\\startup.bat
-
-            """        
+            git 'https://github.com/codewithz/dxc-web-app.git'
+            }
         }
 
-    }
+        stage('Maven Build'){
+            steps{
+            bat """
+                cd mywebapp
+                mvn clean package
+            """
+            }
+        }
 
+    }
+
+    post{
+        success{
+
+            bat """
+                copy %buildLocation%  %tomcatWebLocation%
+                %tomcatBinLocation%\\startup.bat
+            """
+
+        }
+    }
 }
